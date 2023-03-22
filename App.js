@@ -3,15 +3,10 @@ import { StyleSheet, View } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import AppText from "./app/components/AppText";
 import AppButton from "./app/components/AppButton";
+import WelcomeScreen from "./app/screens/WelcomeScreen";
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <MaterialCommunityIcons size={200} name="email" color="dodgerblue" />
-      <AppText>react native</AppText>
-      <AppButton title="Login" onPress={() => console.log("Tapped")} />
-    </View>
-  );
+  return <WelcomeScreen />;
 }
 
 const styles = StyleSheet.create({
