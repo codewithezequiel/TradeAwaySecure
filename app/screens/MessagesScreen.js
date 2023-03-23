@@ -28,6 +28,8 @@ function MessagesScreen(props) {
   // hook into react features in function components.
 
   const [messages, setMessages] = useState(initialMessages);
+  const [refreshing, setRefreshing] = useState(false);
+
   const handleDelete = (message) => {
     // Delete the message from messages
     const newMessages = messages.filter((m) => m.id !== message.id);
@@ -50,9 +52,21 @@ function MessagesScreen(props) {
             renderRightActions={() => (
               <ListItemDeleteAction onPress={() => handleDelete(item)} />
             )}
+        
           />
         )}
         ItemSeparatorComponent={ListItemSeparator}
+        refreshing={refreshing}
+        onRefresh={() => {
+            setMessages([
+                {
+                    id: 2,
+                    title: "T2",
+                    description: "D2",
+                    image: require("../assets/mosh.jpg"),
+                  }
+            ])
+        }}
       />
     </Screen>
   );
