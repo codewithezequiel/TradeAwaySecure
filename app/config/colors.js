@@ -5,5 +5,7 @@ export default {
   white: "#fff",
   grey: "#565f71ff",
   purple: "#3f2844ff",
-  gold: "#ba1a"
+  gold: "#ba1a",
+  light: "#f8f4f4",
+  danger: "#ff5252"
 };
