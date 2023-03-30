@@ -7,6 +7,7 @@ import AppFormField from "../components/AppFormField";
 import AppText from "../components/AppText";
 import Screen from "../components/Screen";
 import SubmitButton from "../components/SubmitButton";
+import AppForm from "../components/AppForm";
 
 // Validation schema: an object that determines all the rules for validating our form
 const validationSchema = Yup.object().shape({
@@ -18,35 +19,31 @@ function LoginScreen(props) {
   return (
     <Screen style={styles.container}>
       <AppText style={styles.logo}>TradeAwaySecure</AppText>
-      <Formik
+      <AppForm
         initialValues={{ email: "", password: "" }}
         onSubmit={(values) => console.log(values)}
         validationSchema={validationSchema}
       >
-        {() => (
-          <>
-            <AppFormField
-              autoCapitalize="none"
-              autoCorrect={false}
-              icon="email"
-              name="email"
-              keyboardType="email-address"
-              placeholder="Email"
-              textContentType="emailAddress"
-            />
-            <AppFormField
-              autoCapitalize="none"
-              autoCorrect={false}
-              icon="lock"
-              name="password"
-              placeholder="Password"
-              textContentType="password"
-              secureTextEntry
-            />
-            <SubmitButton title="Login" />
-          </>
-        )}
-      </Formik>
+        <AppFormField
+          autoCapitalize="none"
+          autoCorrect={false}
+          icon="email"
+          name="email"
+          keyboardType="email-address"
+          placeholder="Email"
+          textContentType="emailAddress"
+        />
+        <AppFormField
+          autoCapitalize="none"
+          autoCorrect={false}
+          icon="lock"
+          name="password"
+          placeholder="Password"
+          textContentType="password"
+          secureTextEntry
+        />
+        <SubmitButton title="Login" />
+      </AppForm>
     </Screen>
   );
 }
