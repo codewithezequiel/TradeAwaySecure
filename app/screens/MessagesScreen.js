@@ -9,8 +9,10 @@ import ListItemDeleteAction from "../components/ListItemDeleteAction";
 const initialMessages = [
   {
     id: 1,
-    title: "T1",
-    description: "D1",
+    title:
+      "jjjjjsjjsjsjsjsjsjsjsjjsjsjsjj fvjaivajvijvijivajivajvijviaviajviajviajviiajiajaijiaviaivajivjavjiaviajifjvifjvifjivfjiv sjsjjsjvndfjnjfnjnjanjnajnfanvnkannjnjnnjnjafnvjavjanjnvjanvjanfvjanfvjanfvjanfjvnafjvnajfvnjafvjfnvjfnvjafnvjfnvjnfvjfnvjnfvjnfjv",
+    description:
+      "jjjjjsjjsjsjsjsjsjsjsjjsjsjsjj fvjaivajvijvijivajivajvijviaviajviajviajviiajiajaijiaviaivajivjavjiaviajifjvifjvifjivfjiv sjsjjsjvndfjnjfnjnjanjnajnfanvnkannjnjnnjnjafnvjavjanjnvjanvjanfvjanfvjanfvjanfjvnafjvnajfvnjafvjfnvjfnvjafnvjfnvjnfvjfnvjnfvjnfjv",
     image: require("../assets/me.jpg"),
   },
   {
