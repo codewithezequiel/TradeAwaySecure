@@ -19,9 +19,20 @@ const validationSchema = Yup.object().shape({
 });
 
 const categories = [
-  { label: "Furniture", value: 1 },
-  { label: "Clothing", value: 2 },
-  { label: "Supplies", value: 3 },
+  { label: "Furniture", value: 1, backgroundColor: "red", icon: "apps" },
+  { label: "Cars", value: 2, backgroundColor: "orange", icon: "email" },
+  { label: "Supplies", value: 3, backgroundColor: "brown", icon: "lock" },
+  { label: "Sports", value: 1, backgroundColor: "green", icon: "apps" },
+  { label: "Clothing", value: 2, backgroundColor: "blue", icon: "email" },
+  { label: "Games", value: 3, backgroundColor: "grey", icon: "lock" },
+  {
+    label: "Movies & Music",
+    value: 1,
+    backgroundColor: "purple",
+    icon: "apps",
+  },
+  { label: "Books", value: 2, backgroundColor: "gold", icon: "email" },
+  { label: "Other", value: 3, backgroundColor: "lavender", icon: "lock" },
 ];
 
 function ListingEditScreen() {
@@ -48,7 +59,8 @@ function ListingEditScreen() {
         <AppFormPicker
           items={categories}
           name="category"
-          PickerItemComponent={CategoryPickerItem}
+          // numberOfColumns={3}
+          // PickerItemComponent={CategoryPickerItem}
           placeholder="Category"
           width="50%"
         />
