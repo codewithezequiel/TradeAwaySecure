@@ -11,13 +11,13 @@ const initialMessages = [
     id: 1,
     title: "T1",
     description: "D1",
-    image: require("../assets/mosh.jpg"),
+    image: require("../assets/me.jpg"),
   },
   {
     id: 2,
     title: "T2",
     description: "D2",
-    image: require("../assets/mosh.jpg"),
+    image: require("../assets/me.jpg"),
   },
 ];
 
@@ -52,20 +52,19 @@ function MessagesScreen(props) {
             renderRightActions={() => (
               <ListItemDeleteAction onPress={() => handleDelete(item)} />
             )}
-        
           />
         )}
         ItemSeparatorComponent={ListItemSeparator}
         refreshing={refreshing}
         onRefresh={() => {
-            setMessages([
-                {
-                    id: 2,
-                    title: "T2",
-                    description: "D2",
-                    image: require("../assets/mosh.jpg"),
-                  }
-            ])
+          setMessages([
+            {
+              id: 2,
+              title: "T2",
+              description: "D2",
+              image: require("../assets/mosh.jpg"),
+            },
+          ]);
         }}
       />
     </Screen>
