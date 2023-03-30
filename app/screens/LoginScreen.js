@@ -6,6 +6,7 @@ import * as Yup from "yup";
 import AppButton from "../components/AppButton";
 import AppText from "../components/AppText";
 import AppTextInput from "../components/AppTextInput";
+import ErrorMessage from "../components/ErrorMessage";
 import Screen from "../components/Screen";
 
 // Validation schema: an object that determines all the rules for validating our form
@@ -23,7 +24,7 @@ function LoginScreen(props) {
         onSubmit={(values) => console.log(values)}
         validationSchema={validationSchema}
       >
-        {({ handleChange, handleSubmit, errors }) => (
+        {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
           <>
             <AppTextInput
               placeholder="Email"
@@ -31,20 +32,23 @@ function LoginScreen(props) {
               autoCapitalize="none"
               autoCorrect={false}
               keyboardType="email-address"
+              onBlur={() => setFieldTouched("email")}
               onChangeText={handleChange("email")}
               textContentType="emailAddress"
             />
-            <AppText style={{ color: "red" }}>{errors.email}</AppText>
+            <ErrorMessage error={errors.email} visible={touched.email} />
             <AppTextInput
               autoCapitalize="none"
               autoCorrect={false}
               icon="lock"
+              onBlur={() => setFieldTouched("password")}
               placeholder="Password"
               textContentType="password"
               onChangeText={handleChange("password")}
               secureTextEntry
             />
-            <AppText style={{ color: "red" }}>{errors.password}</AppText>
+
+            <ErrorMessage error={errors.password} visible={touched.password} />
             <AppButton title="Login" onPress={handleSubmit} />
           </>
         )}
