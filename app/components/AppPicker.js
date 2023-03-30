@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {
-  TextInput,
   View,
   StyleSheet,
   TouchableWithoutFeedback,
@@ -19,6 +18,7 @@ function AppPicker({
   icon,
   items,
   onSelectItem,
+  PickerItemComponent = PickerItem,
   placeholder,
   selectedItem,
   width = "100%",
@@ -56,7 +56,7 @@ function AppPicker({
             data={items}
             keyExtractor={(item) => item.value.toString()}
             renderItem={({ item }) => (
-              <PickerItem
+              <PickerItemComponent
                 onPress={() => {
                   setModalVisible(false);
                   onSelectItem(item);
