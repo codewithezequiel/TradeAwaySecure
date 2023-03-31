@@ -1,43 +1,27 @@
-import React, { useEffect, useState } from "react";
-import * as ImagePicker from "expo-image-picker";
+import React, { useState } from "react";
 
 import Screen from "./app/components/Screen";
-import { Button, Image } from "react-native";
+import ImageInputList from "./app/components/ImageInputList";
+import { Button } from "react-native";
 import ImageInput from "./app/components/ImageInput";
 
 export default function App() {
-  const [imageUri, setImageUri] = useState();
+  const [imageUris, setImageUris] = useState([]);
 
-  const requestPermission = async () => {
-    const { granted } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    if (!granted) alert("You need to enable permission to access the library");
+  const handleAdd = (uri) => {
+    setImageUris([...imageUris, uri]);
   };
 
-  // componentDidMount
-  // useEffect hook (func gets executed everytime comp gets rendered)
-
-  useEffect(() => {
-    requestPermission();
-    // return fn
-  }, []);
-
-  const selectImage = async () => {
-    try {
-      const result = await ImagePicker.launchImageLibraryAsync();
-      if (!result.canceled) {
-        console.log(result.uri);
-        setImageUri(result.uri);
-      }
-    } catch (error) {
-      console.log("error reading an image", error);
-    }
+  const handleRemove = (uri) => {
+    setImageUris(imageUris.filter((imageUri) => imageUri !== uri));
   };
 
   return (
     <Screen>
-      <ImageInput
-        imageUri={imageUri}
-        onChangeImage={(uri) => setImageUri(uri)}
+      <ImageInputList
+        imageUris={imageUris}
+        onAddImage={(uri) => handleAdd(uri)}
+        onRemoveImage={(uri) => handleRemove(uri)}
       />
     </Screen>
   );

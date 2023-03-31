@@ -25,7 +25,7 @@ function ImageInput({ imageUri, onChangeImage }) {
   const handlePress = () => {
     if (!imageUri) selectImage(); // if no image, we are showing the img lib
     else
-      Alert.alert("delete", "Are you sure you want to delete this image?", [
+      Alert.alert("Delete", "Are you sure you want to delete this image?", [
         { text: "Yes", onPress: () => onChangeImage(null) },
         { text: "No" },
       ]);
@@ -38,8 +38,8 @@ function ImageInput({ imageUri, onChangeImage }) {
         quality: 0.5,
       });
       if (!result.canceled) {
-        console.log(result.uri);
-        onChangeImage(result.uri);
+        console.log(result.assets[0].uri);
+        onChangeImage(result.assets[0].uri);
       }
     } catch (error) {
       console.log("error reading an image", error);
