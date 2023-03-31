@@ -1,6 +1,6 @@
 import React from "react";
 import { View, StyleSheet, FlatList, Text } from "react-native";
-import AppText from "../components/AppText";
+import AppText from "../components/Text";
 import Icon from "../components/Icon";
 
 import ListItem from "../components/ListItem";
