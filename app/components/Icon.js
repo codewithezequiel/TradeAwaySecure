@@ -1,6 +1,6 @@
 import React from "react";
 import { View } from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons, Ionicons, Feather } from "@expo/vector-icons";
 
 // Implementing a reusable icon component
 
@@ -21,7 +21,9 @@ function Icon({
         alignItems: "center",
       }}
     >
-      <MaterialCommunityIcons name={name} color={iconColor} size={size / 2} />
+      {(
+        <MaterialCommunityIcons name={name} color={iconColor} size={size / 2} />
+      ) || <Ionicons name={name} color={iconColor} size={size / 2} />}
     </View>
   );
 }
