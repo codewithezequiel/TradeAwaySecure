@@ -36,7 +36,7 @@ function ImageInputList({ imageUris = [], onRemoveImage, onAddImage }) {
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    paddingHorizontal: 15,
+    
   },
   image: {
     marginRight: 10,
