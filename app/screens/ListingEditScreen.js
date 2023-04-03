@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { StyleSheet } from "react-native";
 import * as Yup from "yup";
-import * as Location from "expo-location";
 
 import {
   AppForm,
@@ -67,8 +66,8 @@ function ListingEditScreen() {
         <AppFormPicker
           items={categories}
           name="category"
-          // numberOfColumns={3}
-          // PickerItemComponent={CategoryPickerItem}
+          numberOfColumns={3}
+          PickerItemComponent={CategoryPickerItem}
           placeholder="Category"
           width="50%"
         />
