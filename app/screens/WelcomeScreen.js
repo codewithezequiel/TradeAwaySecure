@@ -3,6 +3,7 @@ import { StyleSheet, View, Text } from "react-native";
 import AppButton from "../components/Button";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
+import routes from "../navigation/routes";
 
 function WelcomeScreen({ navigation }) {
   return (
@@ -23,12 +24,12 @@ function WelcomeScreen({ navigation }) {
         <View style={styles.buttonsContainer}>
           <AppButton
             title="Go To Login"
-            onPress={() => navigation.navigate("Login")}
+            onPress={() => navigation.navigate(routes.LOGIN)}
           />
           <AppButton
             title="Create Account"
             color="black"
-            onPress={() => navigation.navigate("Login")}
+            onPress={() => navigation.navigate(routes.LOGIN)}
           />
         </View>
       </View>
