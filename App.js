@@ -17,15 +17,18 @@ function Tweets({ navigation }) {
   return (
     <Screen>
       <Text>Tweets</Text>
-      <Link />
+      <Button
+        title="View Tweet"
+        onPress={() => navigation.navigate("TweetDetails", { id: 1 })}
+      />
     </Screen>
   );
 }
 
-function TweetDetails() {
+function TweetDetails({ route }) {
   return (
     <Screen>
-      <Text>Tweet Details</Text>
+      <Text>Tweet Details {route.params.id}</Text>
     </Screen>
   );
 }
