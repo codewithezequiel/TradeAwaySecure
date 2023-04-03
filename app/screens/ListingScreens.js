@@ -5,7 +5,7 @@ import Card from "../components/Card";
 import Screen from "../components/Screen";
 import colors from "../config/colors";
 
-function ListingScreens(props) {
+function ListingScreens({ navigation }) {
   //temporary solution: array of objects
   // when we connect the app the backend, I am going to retrieve the listings
   // from the server
@@ -34,6 +34,7 @@ function ListingScreens(props) {
             title={item.title}
             subTitle={"$" + item.price}
             image={item.image}
+            onPress={() => navigation.navigate("Listing Details", item)}
           />
         )}
       />
