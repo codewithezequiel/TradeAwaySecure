@@ -4,7 +4,7 @@ import AppButton from "../components/Button";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 
-function WelcomeScreen(props) {
+function WelcomeScreen({ navigation }) {
   return (
     <LinearGradient
       colors={["#994dbd", "#4e1957", "#572486"]}
@@ -21,8 +21,15 @@ function WelcomeScreen(props) {
           <MaterialCommunityIcons name="security" size={100} color="#4ecdc4" />
         </View>
         <View style={styles.buttonsContainer}>
-          <AppButton title="Go To Login" />
-          <AppButton title="Create Account" color="black" />
+          <AppButton
+            title="Go To Login"
+            onPress={() => navigation.navigate("Login")}
+          />
+          <AppButton
+            title="Create Account"
+            color="black"
+            onPress={() => navigation.navigate("Login")}
+          />
         </View>
       </View>
     </LinearGradient>
