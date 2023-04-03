@@ -37,33 +37,16 @@ function TweetDetails({ route }) {
 
 const Stack = createStackNavigator();
 
-function StackNavigator() {
+function FeedNavigator() {
   return (
-    <Stack.Navigator
-      screenOptions={{
-        headerStyle: {
-          backgroundColor: "dodgerblue",
-        },
-        headerTintColor: "white",
-      }}
-    >
-      <Stack.Screen
-        options={{
-          headerStyle: {
-            backgroundColor: "tomato",
-          },
-          headerTintColor: "white",
-          headerShown: false,
-        }}
-        name="Tweets"
-        component={Tweets}
-      />
+    <Stack.Navigator>
+      <Stack.Screen name="Tweets" component={Tweets} />
       <Stack.Screen name="TweetDetails" component={TweetDetails} />
     </Stack.Navigator>
   );
 }
 
-function Account() {
+function AccountNavigator() {
   return (
     <Screen>
       <Text>Account</Text>
@@ -75,24 +58,9 @@ const Tab = createBottomTabNavigator();
 
 function TabNavigator() {
   return (
-    <Tab.Navigator
-      tabBarOptions={{
-        activeBackgroundColor: "tomato",
-        activeTintColor: "white",
-        inactiveBackgroundColor: "#eee",
-        inactiveTintColor: "black",
-      }}
-    >
-      <Tab.Screen
-        name="Feed"
-        component={Tweets}
-        options={{
-          tabBarIcon: ({ size, color }) => (
-            <MaterialCommunityIcons name="home" size={size} color={color} />
-          ),
-        }}
-      />
-      <Tab.Screen name="Account" component={Account} />
+    <Tab.Navigator screenOptions={{ headerShown: false }}>
+      <Tab.Screen name="Feed" component={FeedNavigator} />
+      <Tab.Screen name="Account" component={AccountNavigator} />
     </Tab.Navigator>
   );
 }
