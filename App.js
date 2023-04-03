@@ -1,6 +1,7 @@
 import React from "react";
 import { Text } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { Button } from "react-native";
 
@@ -61,13 +62,29 @@ function StackNavigator() {
   );
 }
 
+function Account() {
+  return (
+    <Screen>
+      <Text>Account</Text>
+    </Screen>
+  );
+}
+
+const Tab = createBottomTabNavigator();
+
+function TabNavigator() {
+  return (
+    <Tab.Navigator>
+      <Tab.Screen name="Feed" component={Tweets} />
+      <Tab.Screen name="Account" component={Account} />
+    </Tab.Navigator>
+  );
+}
+
 export default function App() {
   return (
     <NavigationContainer>
-      <StackNavigator />
+      <TabNavigator />
     </NavigationContainer>
-    // <Screen>
-    //   <Text>Hello</Text>
-    // </Screen>
   );
 }
