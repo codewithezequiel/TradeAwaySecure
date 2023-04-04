@@ -6,6 +6,8 @@ import Screen from "../components/Screen";
 import colors from "../config/colors";
 import listingsApi from "../api/listings";
 import routes from "../navigation/routes";
+import AppText from "../components/Text";
+import Button from "../components/Button";
 
 function ListingScreens({ navigation }) {
   //temporary solution: array of objects
@@ -14,6 +16,7 @@ function ListingScreens({ navigation }) {
 
   // we should declare a state variable to store the listings that we get from the server.
   const [listings, setListings] = useState([]);
+  const [error, setError] = useState(false);
 
   // now we should call our api the first time our component gets rendered. so we use the effect hook.
   useEffect(() => {
@@ -22,11 +25,20 @@ function ListingScreens({ navigation }) {
 
   const loadListings = async () => {
     const response = await listingsApi.getListings();
+    if (!response.ok) return setError(true); // Always write error handling code first!
+
+    setError(false);
     setListings(response.data);
   };
 
   return (
     <Screen style={styles.screen}>
+      {error && (
+        <>
+          <AppText>Could not retrieve listings from server</AppText>
+          <Button title="Retry" onPress={loadListings} />
+        </>
+      )}
       <FlatList
         data={listings}
         keyExtractor={(listing) => listing.id.toString()}
