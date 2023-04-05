@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, StyleSheet } from "react-native";
 
+import ActivityIndicator from "../components/ActivityIndicator";
 import Card from "../components/Card";
 import Screen from "../components/Screen";
 import colors from "../config/colors";
@@ -17,6 +18,7 @@ function ListingScreens({ navigation }) {
   // we should declare a state variable to store the listings that we get from the server.
   const [listings, setListings] = useState([]);
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   // now we should call our api the first time our component gets rendered. so we use the effect hook.
   useEffect(() => {
@@ -24,7 +26,10 @@ function ListingScreens({ navigation }) {
   }, []);
 
   const loadListings = async () => {
+    setLoading(true);
     const response = await listingsApi.getListings();
+    setLoading(false);
+
     if (!response.ok) return setError(true); // Always write error handling code first!
 
     setError(false);
@@ -39,6 +44,7 @@ function ListingScreens({ navigation }) {
           <Button title="Retry" onPress={loadListings} />
         </>
       )}
+      <ActivityIndicator visible={loading} />
       <FlatList
         data={listings}
         keyExtractor={(listing) => listing.id.toString()}
