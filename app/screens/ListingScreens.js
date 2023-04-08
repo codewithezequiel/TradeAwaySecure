@@ -25,6 +25,7 @@ function ListingScreens({ navigation }) {
     loadListings();
   }, []);
 
+  // Typical implementation for calling APIs, handling errors and showing activity indicators
   const loadListings = async () => {
     setLoading(true);
     const response = await listingsApi.getListings();
