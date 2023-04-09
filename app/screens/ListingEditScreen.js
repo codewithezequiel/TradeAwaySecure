@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 import * as Yup from "yup";
 
 import {
-  AppForm,
+  Form,
   AppFormField,
   AppFormPicker,
   SubmitButton,
@@ -11,6 +11,7 @@ import {
 import CategoryPickerItem from "../components/CategoryPickerItem";
 import FormImagePicker from "../components/forms/FormImagePicker";
 import Screen from "../components/Screen";
+import listingApi from "../api/listings";
 import useLocation from "../hooks/useLocation";
 
 const validationSchema = Yup.object().shape({
@@ -25,25 +26,31 @@ const categories = [
   { label: "Furniture", value: 1, backgroundColor: "red", icon: "apps" },
   { label: "Cars", value: 2, backgroundColor: "orange", icon: "email" },
   { label: "Supplies", value: 3, backgroundColor: "brown", icon: "lock" },
-  { label: "Sports", value: 1, backgroundColor: "green", icon: "apps" },
-  { label: "Clothing", value: 2, backgroundColor: "blue", icon: "email" },
-  { label: "Games", value: 3, backgroundColor: "grey", icon: "lock" },
+  { label: "Sports", value: 4, backgroundColor: "green", icon: "apps" },
+  { label: "Clothing", value: 5, backgroundColor: "blue", icon: "email" },
+  { label: "Games", value: 6, backgroundColor: "grey", icon: "lock" },
   {
     label: "Movies & Music",
-    value: 1,
+    value: 7,
     backgroundColor: "purple",
     icon: "apps",
   },
-  { label: "Books", value: 2, backgroundColor: "gold", icon: "email" },
-  { label: "Other", value: 3, backgroundColor: "lavender", icon: "lock" },
+  { label: "Books", value: 8, backgroundColor: "gold", icon: "email" },
+  { label: "Other", value: 9, backgroundColor: "lavender", icon: "lock" },
 ];
 
 function ListingEditScreen() {
   const location = useLocation();
 
+  const handleSubmit = async (listing) => {
+    const result = await listingApi.addListing({ ...listing, location });
+    if (!result.ok) return alert("Could not save the listing.");
+    alert("Success");
+  }
+
   return (
     <Screen style={styles.container}>
-      <AppForm
+      <Form
         initialValues={{
           title: "",
           price: "",
@@ -51,7 +58,7 @@ function ListingEditScreen() {
           category: null,
           images: [],
         }}
-        onSubmit={(values) => console.log(location)}
+        onSubmit={handleSubmit}
         validationSchema={validationSchema}
       >
         <FormImagePicker name="images" />
@@ -66,8 +73,8 @@ function ListingEditScreen() {
         <AppFormPicker
           items={categories}
           name="category"
-          numberOfColumns={3}
-          PickerItemComponent={CategoryPickerItem}
+          // numberOfColumns={3}
+          // PickerItemComponent={CategoryPickerItem}
           placeholder="Category"
           width="50%"
         />
@@ -79,7 +86,7 @@ function ListingEditScreen() {
           placeholder="Description"
         />
         <SubmitButton title="Post" />
-      </AppForm>
+      </Form>
     </Screen>
   );
 }

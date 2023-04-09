@@ -59,12 +59,12 @@ function AppPicker({
             numColumns={numberOfColumns}
             renderItem={({ item }) => (
               <PickerItemComponent
+                label={item.label}
                 item={item}
                 onPress={() => {
                   setModalVisible(false);
                   onSelectItem(item);
                 }}
-                label={item.label}
               />
             )}
           />
