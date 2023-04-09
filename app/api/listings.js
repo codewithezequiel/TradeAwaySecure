@@ -6,7 +6,7 @@ function getListings() {
   return client.get(endpoint);
 }
 
-const addListing = (listing) => {
+const addListing = (listing, onUploadProgress) => {
   const data = new FormData();
   data.append("title", listing.title);
   data.append("price", listing.price);
@@ -18,13 +18,17 @@ const addListing = (listing) => {
       name: "image" + index,
       type: "image/jpeg",
       uri: image,
-    }));
+    })
+  );
 
   if (listing.location)
     data.append("location", JSON.stringify(listing.location));
 
-  return client.post(endpoint, data);
-}
+  return client.post(endpoint, data, {
+    onUploadProgress: (progress) =>
+      onUploadProgress(progress.loaded / progress.total),
+  });
+};
 
 //simple api layer
 export default {
