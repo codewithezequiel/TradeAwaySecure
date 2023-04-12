@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { StyleSheet } from "react-native";
 import * as Yup from "yup";
 import jwtDecode from "jwt-decode";
@@ -12,6 +12,7 @@ import {
   SubmitButton,
 } from "../components/forms";
 import authApi from "../api/auth";
+import AuthContext from "../auth/context";
 
 // Validation schema: an object that determines all the rules for validating our form
 const validationSchema = Yup.object().shape({
@@ -20,6 +21,7 @@ const validationSchema = Yup.object().shape({
 });
 
 function LoginScreen(props) {
+  const authContext = useContext(AuthContext);
   const [loginFailed, setLoginFailed] = useState(false);
 
   const handleSubmit = async ({ email, password }) => {
@@ -29,7 +31,7 @@ function LoginScreen(props) {
 
     setLoginFailed(false);
     const user = jwtDecode(result.data);
-    console.log(user);
+    authContext.setUser(user);
   };
 
   return (
