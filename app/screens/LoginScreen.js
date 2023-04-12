@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet } from "react-native";
 import * as Yup from "yup";
+import jwtDecode from "jwt-decode";
 
 import AppText from "../components/Text";
 import Screen from "../components/Screen";
-import { AppForm, AppFormField, SubmitButton } from "../components/forms";
+import {
+  ErrorMessage,
+  Form,
+  FormField,
+  SubmitButton,
+} from "../components/forms";
+import authApi from "../api/auth";
 
 // Validation schema: an object that determines all the rules for validating our form
 const validationSchema = Yup.object().shape({
@@ -13,15 +20,32 @@ const validationSchema = Yup.object().shape({
 });
 
 function LoginScreen(props) {
+  const [loginFailed, setLoginFailed] = useState(false);
+
+  const handleSubmit = async ({ email, password }) => {
+    const result = await authApi.login(email, password);
+
+    if (!result.ok) return setLoginFailed(true);
+
+    setLoginFailed(false);
+    const user = jwtDecode(result.data);
+    console.log(user);
+  };
+
   return (
     <Screen style={styles.container}>
       <AppText style={styles.logo}>TradeAwaySecure</AppText>
-      <AppForm
+      <Form
         initialValues={{ email: "", password: "" }}
-        onSubmit={(values) => console.log(values)}
+        onSubmit={handleSubmit}
+        // onSubmit={(values) => console.log(values)}
         validationSchema={validationSchema}
       >
-        <AppFormField
+        <ErrorMessage
+          error="Invalid email and/or password."
+          visible={loginFailed}
+        />
+        <FormField
           autoCapitalize="none"
           autoCorrect={false}
           icon="email"
@@ -30,7 +54,7 @@ function LoginScreen(props) {
           placeholder="Email"
           textContentType="emailAddress"
         />
-        <AppFormField
+        <FormField
           autoCapitalize="none"
           autoCorrect={false}
           icon="lock"
@@ -40,7 +64,7 @@ function LoginScreen(props) {
           secureTextEntry
         />
         <SubmitButton title="Login" />
-      </AppForm>
+      </Form>
     </Screen>
   );
 }
