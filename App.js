@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { Text } from "react-native";
+import React, { useCallback, useEffect, useState } from "react";
+import { Text, View } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { Button } from "react-native";
 import jwtDecode from "jwt-decode";
+import * as SplashScreen from "expo-splash-screen";
 
 import Screen from "./app/components/Screen";
 import AuthNavigator from "./app/navigation/AuthNavigator";
@@ -69,9 +70,10 @@ function TabNavigator() {
     </Tab.Navigator>
   );
 }
-
+SplashScreen.preventAutoHideAsync();
 export default function App() {
   const [user, setUser] = useState();
+  const [appIsReady, setAppIsReady] = useState(false);
 
   const restoreToken = async () => {
     const token = await authStorage.getToken();
@@ -80,14 +82,45 @@ export default function App() {
   };
 
   useEffect(() => {
-    restoreToken();
+    async function prepare() {
+      try {
+        restoreToken();
+      } catch (error) {
+        console.log("Could not reload properly.", error);
+      } finally {
+        setAppIsReady(true);
+      }
+    }
+    prepare();
   }, []); // called only the first time our app comp is rendered
 
+  const onLayoutRootView = useCallback(async () => {
+    if (appIsReady) {
+      // This tells the splash screen to hide immediately! If we call this after
+      // `setAppIsReady`, then we may see a blank screen while the app is
+      // loading its initial state and rendering its first pixels. So instead,
+      // we hide the splash screen once we know the root view has already
+      // performed layout.
+      await SplashScreen.hideAsync();
+    }
+  }, [appIsReady]);
+
+  if (!appIsReady) {
+    return null;
+  }
+
   return (
-    <AuthContext.Provider value={{ user, setUser }}>
-      <NavigationContainer theme={navigationTheme}>
-        {user ? <AppNavigator /> : <AuthNavigator />}
-      </NavigationContainer>
-    </AuthContext.Provider>
+    <View
+      style={{
+        flex: 1,
+      }}
+      onLayout={onLayoutRootView}
+    >
+      <AuthContext.Provider value={{ user, setUser }}>
+        <NavigationContainer theme={navigationTheme}>
+          {user ? <AppNavigator /> : <AuthNavigator />}
+        </NavigationContainer>
+      </AuthContext.Provider>
+    </View>
   );
 }
