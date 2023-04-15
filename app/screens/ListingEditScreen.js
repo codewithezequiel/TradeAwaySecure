@@ -2,12 +2,7 @@ import React, { useState } from "react";
 import { StyleSheet } from "react-native";
 import * as Yup from "yup";
 
-import {
-  Form,
-  AppFormField,
-  AppFormPicker,
-  SubmitButton,
-} from "../components/forms";
+import { Form, FormField, FormPicker, SubmitButton } from "../components/forms";
 import CategoryPickerItem from "../components/CategoryPickerItem";
 import FormImagePicker from "../components/forms/FormImagePicker";
 import Screen from "../components/Screen";
@@ -79,15 +74,15 @@ function ListingEditScreen() {
         validationSchema={validationSchema}
       >
         <FormImagePicker name="images" />
-        <AppFormField maxLength={255} name="title" placeholder="Title" />
-        <AppFormField
+        <FormField maxLength={255} name="title" placeholder="Title" />
+        <FormField
           keyboardType="numeric"
           maxLength={8}
           name="price"
           placeholder="Price"
           width={120}
         />
-        <AppFormPicker
+        <FormPicker
           items={categories}
           name="category"
           // numberOfColumns={3}
@@ -95,7 +90,7 @@ function ListingEditScreen() {
           placeholder="Category"
           width="50%"
         />
-        <AppFormField
+        <FormField
           multiline
           maxLength={255}
           numberOfLines={3}
