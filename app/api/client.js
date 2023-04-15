@@ -1,8 +1,15 @@
 import { create } from "apisauce";
 import cache from "../utility/cache";
+import authStorage from "../auth/storage";
 
 const apiClient = create({
   baseURL: "http://192.168.1.246:9000/api",
+});
+
+apiClient.addAsyncRequestTransform(async (request) => {
+  const authToken = await authStorage.getToken();
+  if (!authToken) return;
+  request.headers["x-auth-token"] = authToken;
 });
 
 // Changing the implementation of the get method
@@ -25,8 +32,6 @@ apiClient.get = async (url, params, axiosConfig) => {
   // original response object containing info why call to server failed.
   return data ? { ok: true, data } : response;
 };
-
-
 
 // all i am doing here is simply exporting apiClient as the default object.
 export default apiClient;
