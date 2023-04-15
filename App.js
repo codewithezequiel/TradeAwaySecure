@@ -1,90 +1,28 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Text, View } from "react-native";
-import { createStackNavigator } from "@react-navigation/stack";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { NavigationContainer, useNavigation } from "@react-navigation/native";
-import { Button } from "react-native";
-import jwtDecode from "jwt-decode";
+import { NavigationContainer } from "@react-navigation/native";
+import { View } from "react-native";
 import * as SplashScreen from "expo-splash-screen";
 
-import Screen from "./app/components/Screen";
-import AuthNavigator from "./app/navigation/AuthNavigator";
-import navigationTheme from "./app/navigation/navigationTheme";
 import AppNavigator from "./app/navigation/AppNavigator";
 import AuthContext from "./app/auth/context";
+import AuthNavigator from "./app/navigation/AuthNavigator";
 import authStorage from "./app/auth/storage";
+import navigationTheme from "./app/navigation/navigationTheme";
 
-function Link() {
-  const navigation = useNavigation();
-  return (
-    <Button title="Click" onPress={() => navigation.navigate("TweetDetails")} />
-  );
-}
-
-function Tweets({ navigation }) {
-  return (
-    <Screen>
-      <Text>Tweets</Text>
-      <Button
-        title="View Tweet"
-        onPress={() => navigation.navigate("TweetDetails", { id: 1 })}
-      />
-    </Screen>
-  );
-}
-
-function TweetDetails({ route }) {
-  return (
-    <Screen>
-      <Text>Tweet Details {route.params.id}</Text>
-    </Screen>
-  );
-}
-
-const Stack = createStackNavigator();
-
-function FeedNavigator() {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen name="Tweets" component={Tweets} />
-      <Stack.Screen name="TweetDetails" component={TweetDetails} />
-    </Stack.Navigator>
-  );
-}
-
-function AccountNavigator() {
-  return (
-    <Screen>
-      <Text>Account</Text>
-    </Screen>
-  );
-}
-
-const Tab = createBottomTabNavigator();
-
-function TabNavigator() {
-  return (
-    <Tab.Navigator screenOptions={{ headerShown: false }}>
-      <Tab.Screen name="Feed" component={FeedNavigator} />
-      <Tab.Screen name="Account" component={AccountNavigator} />
-    </Tab.Navigator>
-  );
-}
 SplashScreen.preventAutoHideAsync();
 export default function App() {
   const [user, setUser] = useState();
   const [appIsReady, setAppIsReady] = useState(false);
 
-  const restoreToken = async () => {
-    const token = await authStorage.getToken();
-    if (!token) return;
-    setUser(jwtDecode(token)); // passing the object that is returned from this func
+  const restoreUser = async () => {
+    const user = await authStorage.getUser();
+    if (user) setUser(user);
   };
 
   useEffect(() => {
     async function prepare() {
       try {
-        restoreToken();
+        restoreUser();
       } catch (error) {
         console.log("Could not reload properly.", error);
       } finally {
