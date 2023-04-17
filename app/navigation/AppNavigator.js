@@ -8,12 +8,18 @@ import expoPushTokensApi from "../api/expoPushTokens";
 import FeedNavigator from "./FeedNavigator";
 import ListingEditScreen from "../screens/ListingEditScreen";
 import NewListingButton from "./NewListingButton";
+import useNotifications from "../hooks/useNotifications";
 
 const Tab = createBottomTabNavigator();
 
 const AppNavigator = () => {
+  useNotifications();
   useEffect(() => {
     registerForPushNotifications();
+
+    Notifications.addPushTokenListener((notification) =>
+      console.log(notification)
+    );
   }, []);
   const registerForPushNotifications = async () => {
     try {

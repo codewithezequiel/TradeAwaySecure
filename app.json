@@ -21,6 +21,7 @@
        "supportsTablet": true
     },
     "android": {
+      "useNextNotificationsApi":true,
       "adaptiveIcon": {
         "foregroundImage": "./app/assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
